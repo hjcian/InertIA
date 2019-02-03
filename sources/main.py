@@ -1,36 +1,25 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Sat Apr 14 14:26:58 2018
-
-@author: MaxCian
-"""
 import os
-import googlefinanceAPI as gf_api
-from inertia_database import inertiaDB
+import sys
+import csv
+from docopt import docopt
+from database.ft_db import FirstradeDB
+FTDB = FirstradeDB()
 
-db_dir = "./db_pool/"
+def fcn(*args, **kwargs):
+    print('args: {}'.format(args))
+    print('kwargs: {}'.format(kwargs))
 
-print(os.path.dirname(db_dir))
-print(os.path.abspath(db_dir))
+def readFirstradeCSV(fpath):
+    print(fpath)
+    with open(fpath, 'r') as fp:
+        csv_reader = csv.DictReader(fp)
+        for row in csv_reader:
+            FTDB.write(**row)
 
-if not os.path.exists(db_dir):
-    print("not exist")
-if not os.path.exists(os.path.dirname(db_dir)):
-    print("not exist")
-if not os.path.exists(os.path.abspath(db_dir)):
-    print("not exist")
-
-
-
-db = inertiaDB("test.db")
-
-ssymbol = 'VT'
-xsymbol = 'NYSEARCA'
-p = '10d'
-df = gf_api.get_prices(ssymbol, xsymbol, interval=p)
-print(df)
-db.add(ssymbol, xsymbol, df)
-all = db.fetchall(ssymbol, xsymbol)
-for t in all:
-    print(t)
-
+if __name__ == "__main__":
+    fpath = sys.argv[1]
+    readFirstradeCSV(fpath)
+    ret = FTDB.queryAll()
+    for row in ret:
+        print(row)
