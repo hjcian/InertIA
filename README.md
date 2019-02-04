@@ -11,4 +11,4 @@ InertIA，為 Inert Investment Assistant 的縮寫，是一個比指數化投資
 # Dependencies
 1. docopt
 2. sqlalchemy
-3. 
+3. scipy-1.2.0 (numpy-1.16.1)

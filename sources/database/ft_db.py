@@ -77,7 +77,7 @@ class FT_Table(Base):
 
 def _create(database_fpath=':memory:'):
     db_uri = 'sqlite:///{}'.format(database_fpath)
-    engine = create_engine(db_uri, echo=True)
+    engine = create_engine(db_uri, echo=False)
     Base.metadata.create_all(engine)
     Session = sessionmaker(bind=engine)
     session = Session()
@@ -88,9 +88,13 @@ class FirstradeDB(object):
         self.session = _create(db_fpath)
 
     def write(self, **kwargs):
-        row = FT_Table(**kwargs)
-        self.session.add(row)
-        self.session.commit()
+        try:
+            row = FT_Table(**kwargs)
+            self.session.add(row)
+            self.session.commit()
+        except Exception as err:
+            self.session.rollback()
+            print('Error when write data: {}'.format(err))
     
     def queryAll(self):
         ret = self.session.query(FT_Table).all()
