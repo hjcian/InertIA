@@ -6,9 +6,10 @@ InertIA，為 Inert Investment Assistant 的縮寫，是一個比指數化投資
 **backend**
 
 1. read Fistrade standard trading history output file (CSV), write to sqlite3
-2. calculate total annually yearly returns in %
+2. given a symbol "ticker" and "price", calculate that symbol's annually returns
 
 # Dependencies
 1. docopt
 2. sqlalchemy
 3. scipy-1.2.0 (numpy-1.16.1)
+
