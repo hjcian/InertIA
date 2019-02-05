@@ -55,7 +55,7 @@ def xnpv(rate,cashflows):
 
     return sum([cf/(1+rate)**((t-t0).days/365.0) for (t,cf) in chron_order])
 
-def xirr(cashflows,guess=0.1):
+def xirr(cashflows, guess=0.1):
     """
     Calculate the Internal Rate of Return of a series of cashflows at irregular intervals.
 
