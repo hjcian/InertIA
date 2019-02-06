@@ -18,7 +18,7 @@ Options:
                             Allowed format: 
                                 1. Firstrade standard account historical record csv file
     --ar                    Calculate Annualized Return by given a bunch of symbol and current (today) price.
-                            Allowed format:
+                            i.e.
                                 {0} --ar vt:70.1 bwx:27.86
 
 """.format(os.path.basename(__file__))

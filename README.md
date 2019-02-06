@@ -9,6 +9,7 @@ InertIA，為 Inert Investment Assistant 的縮寫，是一跟指數化投資人
 2. given a symbol "ticker" and "price", calculate that symbol's annually returns
     - 2.1 support multiple tickers calculation
 
+
 # Dependencies
 1. docopt
 2. sqlalchemy
