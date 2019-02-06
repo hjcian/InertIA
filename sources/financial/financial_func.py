@@ -1,5 +1,6 @@
 import os
 import sys
+import json
 import datetime
 FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 SRC_DIR = os.path.dirname(FILE_DIR)
@@ -35,4 +36,26 @@ def calcAnnualizedReturn(symbol, current_price):
     LOGGER.debug('cashflows: {}'.format(cashflows))
     AnnualizedReturn = xirr(cashflows)
     LOGGER.debug('AnnualizedReturn: {}'.format(AnnualizedReturn))
+    return AnnualizedReturn
+
+def calcMultiAnnualizedReturn(symbol_to_price):
+    LOGGER.debug('given: {}'.format(symbol_to_price))
+    ret = DB.readBySymbols(symbol_to_price.keys())
+    symbol_to_Quantity = dict.fromkeys(symbol_to_price.keys(), 0)
+    total_Amount = 0
+    cashflows = []
+    for r in ret:
+        symbol_to_Quantity[r.Symbol] += r.Quantity        
+        if r.Action == 'buy':
+            total_Amount += r.Amount
+            cashflows.extend([(r.TradeDate, r.Amount)])
+
+    LOGGER.debug('symbol_to_Quantity: {}'.format(json.dumps(symbol_to_Quantity, indent=4)))
+    LOGGER.debug('total_cost: {}'.format(total_Amount))
+    end_value = 0
+    for symbol in symbol_to_Quantity:
+        end_value += symbol_to_Quantity[symbol] * symbol_to_price[symbol]
+    cashflows.extend([(datetime.datetime.today(), end_value)])
+    AnnualizedReturn = xirr(cashflows)
+    LOGGER.debug('AnnualizedReturn: {:.2f} %'.format(AnnualizedReturn * 100))
     return AnnualizedReturn

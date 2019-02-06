@@ -10,16 +10,16 @@ DOCOPT_DOC = """
 Usage: 
     {0} (-h)
     {0} [--import <filepath>]
-        [--calc <symbol:price>]
+        [--ar] [<symbol:price>...]
 
 Options:
     -h                      Show this help.
     --import <filepath>     Read file from <file path>.
                             Allowed format: 
                                 1. Firstrade standard account historical record csv file
-    --calc <symbol:price>   Calculate Annual Return by given symbol and current (today) price.
-                            Allowed format: 
-                                1. VT:70.1
+    --ar                    Calculate Annualized Return by given a bunch of symbol and current (today) price.
+                            Allowed format:
+                                {0} --ar vt:70.1 bwx:27.86
 
 """.format(os.path.basename(__file__))
 
@@ -33,29 +33,28 @@ LOGGER = logger.get_single_logger()
 def importData(fpath):
     FTStandardCSV = fpath
     FTDB.importFTStandardCSV(FTStandardCSV)
-    ret = FTDB.queryAll()
-    for row in ret:
-        LOGGER.info(row)
+    # ret = FTDB.queryAll()
+    # for row in ret:
+    #     LOGGER.info(row)
 
 def _parseSymbolPrice(symbolAndPrice):
     s_p = symbolAndPrice.split(':')
     if len(s_p) != 2:
-        raise KeyError('Foramt error ({})'.format(symbolAndPrice))
+        raise KeyError('format error ({})'.format(symbolAndPrice))
     try:
         symbol = s_p[0].lower()
         price = float(s_p[1])
-        return symbol, price
+        return { symbol: price }
     except Exception as err:
-        raise KeyError('Foramt error ({}:{}): {}'.format(symbol, price, err))
+        raise KeyError('format error ({}:{}): {}'.format(symbol, price, err))
 
 if __name__ == "__main__":
     argv = docopt(DOCOPT_DOC)
+    # print(argv)
     if argv['--import']:
         importData(argv['--import'])
-    elif argv['--calc']:
-        symbol, price = _parseSymbolPrice(argv['--calc'])
-        financial_func.calcAnnualizedReturn(symbol, price)
-
-    
-
- 
+    elif argv['--ar']:
+        symbol_to_price = dict()
+        for sp in argv['<symbol:price>']:
+            symbol_to_price.update(_parseSymbolPrice(sp))                
+        financial_func.calcMultiAnnualizedReturn(symbol_to_price)

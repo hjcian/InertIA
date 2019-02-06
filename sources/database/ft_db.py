@@ -119,6 +119,15 @@ class FirstradeDB(object):
             LOGGER.warning('Read data error: {}'.format(err))
             return []
 
+    def readBySymbols(self, symbols):
+        try:
+            ret = self.session.query(FirstradeRecord).filter(FirstradeRecord.Symbol.in_(symbols)).order_by(FirstradeRecord.TradeDate).all()
+            return ret
+        except Exception as err:
+            self.session.rollback()
+            LOGGER.warning('Read data error: {}'.format(err), exc_info=True)
+            return []
+
     def importFTStandardCSV(self, fpath):
         with open(fpath, 'r') as fp:
             csv_reader = csv.DictReader(fp)        
