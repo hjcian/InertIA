@@ -22,7 +22,6 @@ InertIA，為 Inert Investment Assistant 的縮寫，是一跟指數化投資人
 # Online resource
 - [Alpha Vantage](https://www.alphavantage.co/): free APIs for realtime and historical data on stocks and etc. 
 
-
 # Good Q&A worth to note (will move to other place after finishing development)
 - [dynamically adding and removing widgets in PyQt](https://stackoverflow.com/questions/8651742/dynamically-adding-and-removing-widgets-in-pyqt)
 - [setFocus() after show](https://stackoverflow.com/questions/49418905/pyqt-setting-focus-on-qlineedit-widget)
