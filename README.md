@@ -32,3 +32,4 @@ InertIA，為 Inert Investment Assistant 的縮寫，是一跟指數化投資人
     self.LineEdit.setValidator(self.onlyInt)
     ```
 - [Validating user input in PyQt4(it work on PyQt5) using QValidator](https://snorfalorpagus.net/blog/2014/08/09/validating-user-input-in-pyqt4-using-qvalidator/)
+- Why I just type `pip install pyinstaller`, then got an `ImportError: No module named 'PyInstaller'`? [(*stackoverflow*)](https://stackoverflow.com/questions/44740792/pyinstaller-no-module-named-pyinstaller)
