@@ -41,8 +41,16 @@ class MainWindow(QTabWidget):
         self.setCurrentIndex(0)
         
 if __name__ == "__main__":
-    app = QApplication(sys.argv)
-    app.setStyle('Macintosh')
-    mw = MainWindow()
-    mw.show()
-    sys.exit(app.exec_())
+    import time
+    import traceback
+    try:
+        app = QApplication(sys.argv)
+        app.setStyle('Macintosh')
+        mw = MainWindow()
+        mw.show()
+    except Exception:
+        print("{}".format(traceback.format_exc()))
+    finally:
+        time.sleep(10)
+        sys.exit(app.exec_())
+    
