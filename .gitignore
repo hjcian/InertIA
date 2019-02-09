@@ -9,6 +9,8 @@ activate
 env
 node_modules
 target/
+build/
+dist/
 
 # dataset and db
 *.csv
