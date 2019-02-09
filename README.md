@@ -2,13 +2,22 @@
 
 InertIA，為 Inert Investment Assistant 的縮寫，是一跟指數化投資人一樣懶惰的投資助理，希冀協助指數型投資人能夠不受到外力的影響(消息、短期波動)，保持著嚴謹的投資慣性(inertia)。
 
+# Distributions
+
+**Windows**
+
+[latest beta version](https://www.dropbox.com/s/0ot52r5gtraa40e/inertia.tgz?dl=0)
+
+**MacOS**
+
+*comming soon*
+
 # Features
 
 - 匯入
     1. 一鍵匯入 Firstrade 標準帳戶交易紀錄CSV檔
 - 財務計算
     1. 手動填入一個或多個股票代號及現在每股淨值，並根據已匯入的資料計算年化投資報酬率
-
 
 # For developers
 **Run by native python**
@@ -51,7 +60,10 @@ $ virtualenv -p python3 env
 ## Online resource
 - [Alpha Vantage](https://www.alphavantage.co/): free APIs for realtime and historical data on stocks and etc. 
 
-## Good Q&A
+## Some problems & tips
+
+**PyQt**
+
 - [dynamically adding and removing widgets in PyQt](https://stackoverflow.com/questions/8651742/dynamically-adding-and-removing-widgets-in-pyqt)
 
 - [setFocus() after show](https://stackoverflow.com/questions/49418905/pyqt-setting-focus-on-qlineedit-widget)
@@ -65,7 +77,8 @@ $ virtualenv -p python3 env
 
 - [Validating user input in PyQt4(it work on PyQt5) using QValidator](https://snorfalorpagus.net/blog/2014/08/09/validating-user-input-in-pyqt4-using-qvalidator/)
 
-- Why I just type `pip install pyinstaller`, then got an `ImportError: No module named 'PyInstaller'`? [(*stackoverflow*)](https://stackoverflow.com/questions/44740792/pyinstaller-no-module-named-pyinstaller)
+**pyinstaller**
+- [pyinstaller No module named pyinstaller](https://stackoverflow.com/questions/44740792/pyinstaller-no-module-named-pyinstaller)
 
-- ImportError when runtime [stackoverflow](https://stackoverflow.com/questions/32093559/exe-file-created-by-pyinstaller-not-find-self-defined-modules-while-running)
+- [exe-file created by pyinstaller, not find self-defined modules while running](https://stackoverflow.com/questions/32093559/exe-file-created-by-pyinstaller-not-find-self-defined-modules-while-running)
     - add path which use sys.path added to 'pathex' in ProgramName.spec
