@@ -5,8 +5,7 @@ import datetime
 FILE_DIR = os.path.dirname(os.path.realpath(__file__))
 SRC_DIR = os.path.dirname(FILE_DIR)
 FIN_DIR = os.path.join(SRC_DIR, 'financial')
-PROJECT_DIR = os.path.dirname(SRC_DIR)
-DATA_DIR = os.path.join(PROJECT_DIR, 'data')
+DATA_DIR = os.path.join(SRC_DIR, 'data')
 sys.path.append(FIN_DIR)
 sys.path.append(SRC_DIR)
 from util import util

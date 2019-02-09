@@ -14,8 +14,7 @@ sys.path.append(os.path.join(SRC_DIR, 'util'))
 sys.path.append(os.path.join(SRC_DIR, 'database'))
 from util import util
 from database.ft_db import get_firstrade_db
-PROJECT_DIR = os.path.dirname(SRC_DIR)
-DATA_DIR = os.path.join(PROJECT_DIR, 'data')
+DATA_DIR = os.path.join(SRC_DIR, 'data')
 CONFIG = util.loadConfig(os.path.join(DATA_DIR, 'config.json'))
 FTDB = get_firstrade_db(db_fpath=os.path.join(DATA_DIR, CONFIG['database']))
 

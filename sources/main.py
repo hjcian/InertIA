@@ -1,60 +1,56 @@
-# -*- coding: utf-8 -*-
 import os
 import sys
-from docopt import docopt
-from database.ft_db import get_firstrade_db
-from util import util
-from util import logger
-from financial import financial_func
-DOCOPT_DOC = """
-Usage: 
-    {0} (-h)
-    {0} [--import <filepath>]
-        [--ar] [<symbol:price>...]
+from PyQt5 import QtCore
+from PyQt5.QtWidgets import QApplication, QWidget
+from PyQt5.QtWidgets import QLabel, QPushButton, QLineEdit, QTabWidget
+from PyQt5.QtGui import QValidator, QDoubleValidator
+from PyQt5.QtWidgets import QVBoxLayout, QHBoxLayout, QFormLayout
+from PyQt5.QtWidgets import QStyleFactory
+from PyQt5.QtWidgets import QTextBrowser
+from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QTableWidget, QTableWidgetItem, QAbstractScrollArea
+from tabs import (annualized_return_calculator, 
+                  import_tab,
+                  about,
+                 )
+STANDARD_H = 600
+STANDARD_W = 800
 
-Options:
-    -h                      Show this help.
-    --import <filepath>     Read file from <file path>.
-                            Allowed format: 
-                                1. Firstrade standard account historical record csv file
-    --ar                    Calculate Annualized Return by given a bunch of symbol and current (today) price.
-                            i.e.
-                                {0} --ar vt:70.1 bwx:27.86
+class MainWindow(QTabWidget):
+    def __init__(self, *argv, **kwargv):
+        super().__init__(*argv, **kwargv)
+        self.setWindowGeometry()
+        self.setUI()
 
-""".format(os.path.basename(__file__))
+    def setWindowGeometry(self):
+        self.left = 10
+        self.top = 10
+        self.width = STANDARD_W
+        self.height = STANDARD_H
+        self.setGeometry(self.left, self.top, self.width, self.height)
 
-SRC_DIR = os.path.dirname(os.path.realpath(__file__))
-PROJECT_DIR = os.path.dirname(SRC_DIR)
-DATA_DIR = os.path.join(PROJECT_DIR, 'data')
-CONFIG = util.loadConfig(os.path.join(DATA_DIR, 'config.json'))
-FTDB = get_firstrade_db(db_fpath=os.path.join(DATA_DIR, CONFIG['database']))
-LOGGER = logger.get_single_logger()
+    def setUI(self):
+        self.setWindowTitle("InertIA - Inert Investment Assistant")
+        self.import_tab = import_tab.ImportTab()
+        self.annualized_return_calculator_tab = annualized_return_calculator.AnnualizedReturnCalculator()
+        self.about_tab = about.AboutTab()
 
-def importData(fpath):
-    FTStandardCSV = fpath
-    FTDB.importFTStandardCSV(FTStandardCSV)
-    # ret = FTDB.queryAll()
-    # for row in ret:
-    #     LOGGER.info(row)
-
-def _parseSymbolPrice(symbolAndPrice):
-    s_p = symbolAndPrice.split(':')
-    if len(s_p) != 2:
-        raise KeyError('format error ({})'.format(symbolAndPrice))
-    try:
-        symbol = s_p[0].lower()
-        price = float(s_p[1])
-        return { symbol: price }
-    except Exception as err:
-        raise KeyError('format error ({}:{}): {}'.format(symbol, price, err))
-
+        self.addTab(self.import_tab, "Import Data")
+        self.addTab(self.annualized_return_calculator_tab, "Calculate Annualized Return")
+        self.addTab(self.about_tab, "About")
+        self.setCurrentIndex(0)
+        
 if __name__ == "__main__":
-    argv = docopt(DOCOPT_DOC)
-    # print(argv)
-    if argv['--import']:
-        importData(argv['--import'])
-    elif argv['--ar']:
-        symbol_to_price = dict()
-        for sp in argv['<symbol:price>']:
-            symbol_to_price.update(_parseSymbolPrice(sp))                
-        financial_func.calcMultiAnnualizedReturn(symbol_to_price)
+    import time
+    import traceback
+    try:
+        app = QApplication(sys.argv)
+        app.setStyle('Macintosh')
+        mw = MainWindow()
+        mw.show()
+    except Exception:
+        print("{}".format(traceback.format_exc()))
+    finally:
+        time.sleep(10)
+        sys.exit(app.exec_())
+    
