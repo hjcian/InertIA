@@ -1,1 +1,1 @@
-tar -zcf inertia.tgz dist/inertia/
+tar -C dist/ -zcf inertia.tgz inertia/
