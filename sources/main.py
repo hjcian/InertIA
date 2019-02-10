@@ -51,6 +51,5 @@ if __name__ == "__main__":
     except Exception:
         print("{}".format(traceback.format_exc()))
     finally:
-        time.sleep(10)
         sys.exit(app.exec_())
     
