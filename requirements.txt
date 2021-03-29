@@ -20,7 +20,7 @@ macholib==1.11
 mccabe==0.6.1
 numpy==1.16.1
 pefile==2018.8.8
-Pygments==2.3.1
+Pygments==2.7.4
 PyInstaller==3.4
 pylint==2.2.2
 PyQt5==5.9.2
